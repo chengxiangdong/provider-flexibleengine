@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch: {}
 
 env:
   # Common versions
@@ -20,7 +21,6 @@ jobs:
   release_please:
     name: Release Please
     runs-on: ubuntu-22.04
-    if: github.repository == 'FlexibleEngineCloud/provider-flexibleengine'
     outputs:
       release_created: ${{ steps.release.outputs.release_created }}
       tag_name: ${{ steps.release.outputs.tag_name }}
@@ -102,7 +102,7 @@ jobs:
           BUILD_ARGS: "--load"
 
       - name: Upload Artifacts to GitHub
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: output
           path: _output/**
@@ -119,4 +119,4 @@ jobs:
         continue-on-error: true
         run: |
           export VERSION_TAG=$GITHUB_REF_NAME
-          curl -s -X GET "https://doc.crds.dev/github.com/FlexibleEngineCloud/provider-flexibleengine@${VERSION_TAG}"
+          curl -s -X GET "https://doc.crds.dev/github.com/chengxiangdong/provider-flexibleengine@${VERSION_TAG}"
